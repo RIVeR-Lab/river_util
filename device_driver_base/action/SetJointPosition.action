@@ -1,0 +1,12 @@
+#Message representing setting a joint to a specific position (units are in rad and rad/s)
+
+#goal definition
+float64 angle
+float64 max_velocity
+---
+#result definition
+float64 final_angle
+---
+#feedback
+Header header
+float64 current_angle
