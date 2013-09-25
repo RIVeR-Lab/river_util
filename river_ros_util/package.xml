@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <name>river_ros_util</name>
+  <version>0.0.0</version>
+  <description>A collection of ROS Utilities developed by the WPI RIVeR Lab</description>
+
+  <maintainer email="mwills@wpi.edu">Mitchell Wills</maintainer>
+
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+
+
+  <export>
+  </export>
+</package>
