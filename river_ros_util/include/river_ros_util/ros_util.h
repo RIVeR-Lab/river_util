@@ -38,15 +38,17 @@ class StackTraceException : public std::runtime_error{
 
 
 
+
 /**
  * @author Mitchell Wills
  * @brief gets a ros parameter and stores it to a variable, will do ROS_WARN if the parameter is not set
+ * @param n the node to get the parameter from
  * @param var the variable to store the parameter value into
  * @param param_name the name of the parameter
  * @return true if the parameter value was set
  */
-template<class T> static inline bool get_param(T& var, std::string param_name){
-  if(!ros::param::get(param_name, var)){
+template<class T> static inline bool get_param(ros::NodeHandle& n, T& var, std::string param_name){
+  if(!n.getParam(param_name, var)){
     ROS_WARN_STREAM("Parameter <"<<param_name<<"> not set. Using default value '"<<var<<"'");
     return false;
   }
@@ -55,15 +57,44 @@ template<class T> static inline bool get_param(T& var, std::string param_name){
 
 /**
  * @author Mitchell Wills
- * @brief defines a variable of a given type and stores the value of the ROS parameter 
+ * @brief defines a variable of a given type and stores the value of the ROS parameter
  * @param type the type of the variable
  * @param var_name the name of the variable that will be defined
  * @param param_name the name of the parameter to load into the variable
  * @param default_value the default value to store in the variable fit the parameter is not set
  */
-#define define_and_get_param(type, var_name, param_name, default_value) \
+#define define_and_get_global_param_(type, var_name, param_name, default_value) \
 	type var_name(default_value);					\
-	::river_ros_util::get_param(var_name, param_name)
+	::river_ros_util::get_global_param(var_name, param_name)
+
+/**
+ * @author Mitchell Wills
+ * @brief defines a variable of a given type and stores the value of the ROS parameter
+ * @param n the node to get the parameter from
+ * @param type the type of the variable
+ * @param var_name the name of the variable that will be defined
+ * @param param_name the name of the parameter to load into the variable
+ * @param default_value the default value to store in the variable fit the parameter is not set
+ */
+#define define_and_get_param(n, type, var_name, param_name, default_value) \
+	type var_name(default_value);					\
+	::river_ros_util::get_param(n, var_name, param_name)
+
+
+/**
+ * @author Mitchell Wills
+ * @brief gets a ros parameter and stores it to a variable, will do ROS_WARN if the parameter is not set
+ * @param var the variable to store the parameter value into
+ * @param param_name the name of the parameter
+ * @return true if the parameter value was set
+ */
+template<class T> static inline bool get_global_param(T& var, std::string param_name){
+  if(!ros::param::get(param_name, var)){
+    ROS_WARN_STREAM("Parameter <"<<param_name<<"> not set. Using default value '"<<var<<"'");
+    return false;
+  }
+  return true;
+}
 
 /**
  * @author Mitchell Wills

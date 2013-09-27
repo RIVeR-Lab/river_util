@@ -1,0 +1,13 @@
+*~
+*.pyc
+CMakeFiles
+Makefile
+CTestTestfile.cmake
+devel
+catkin_generated
+catkin
+CMakeCache.txt
+gtest
+.cproject
+.project
+cmake_install.cmake
