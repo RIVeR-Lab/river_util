@@ -96,16 +96,6 @@ template<class T> static inline bool get_global_param(T& var, std::string param_
   return true;
 }
 
-/**
- * @author Mitchell Wills
- * @brief returns true if the actual value matches the expected
- * @param expected the expected value
- * @param actual the value to be compared to the expected
- */
-static inline bool streq(const char* expected, const char* actual){
-  return !strcmp(expected, actual);
-}
-
 }
 
 #endif//ROS_UTIL

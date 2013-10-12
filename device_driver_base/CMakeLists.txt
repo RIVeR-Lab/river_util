@@ -4,7 +4,7 @@ project(device_driver_base)
 find_package(catkin REQUIRED roscpp std_msgs actionlib actionlib_msgs dynamic_reconfigure river_ros_util)
 
 add_action_files(DIRECTORY action FILES SetJointPosition.action SetMotorPosition.action)
-add_message_files(DIRECTORY msg FILES MotorFeedback.msg SensorLevels.msg SetJointVelocity.msg SetMotorPower.msg SetMotorVelocity.msg)
+add_message_files(DIRECTORY msg FILES MotorFeedback.msg SensorLevels.msg SetJointVelocity.msg SetMotorPower.msg SetMotorVelocity.msg SoftwareStop.msg)
 generate_messages(DEPENDENCIES actionlib_msgs)
 
 
