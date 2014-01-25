@@ -2,6 +2,7 @@
 #define ROS_UTIL_H_
 
 #include <stdlib.h>
+#include <cstddef>
 #include <cstring>
 #include <exception>
 #include <stdexcept>
