@@ -17,9 +17,13 @@ catkin_package(
 
 
 include_directories(
+  include
   ${Curses_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
 
 add_executable(keyboard_twist_teleop src/keyboard_twist.cpp)
 target_link_libraries(keyboard_twist_teleop ${catkin_LIBRARIES} ${Curses_LIBRARIES})
+
+add_executable(joystick_twist_teleop src/joystick_twist.cpp)
+target_link_libraries(joystick_twist_teleop ${catkin_LIBRARIES})
