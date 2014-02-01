@@ -44,8 +44,8 @@ public:
 	  double leftSpeed = u1*rotations_per_meter;//rps
 	  double rightSpeed = u2*rotations_per_meter;//rps
 
-	  left_joint_.setCommand(leftSpeed);
-	  right_joint_.setCommand(rightSpeed);
+	  left_joint_.setCommand(leftSpeed*2*M_PI);
+	  right_joint_.setCommand(rightSpeed*2*M_PI);
   }
 
   hardware_interface::JointHandle left_joint_;
