@@ -50,7 +50,7 @@ void Teleop::JoystickMSG(const sensor_msgs::JoyConstPtr& joystick) {
 int main(int argc, char **argv) {
 
   /* Set up ROS */
-  ros::init(argc, argv, "joystick_twist_teleop");
+  ros::init(argc, argv, "joystick_twist_teleop", ros::init_options::AnonymousName);
   ros::NodeHandle nh;
   ros::NodeHandle param_nh("~");
 

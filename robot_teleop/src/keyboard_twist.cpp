@@ -18,7 +18,7 @@
 
 int main(int argc, char **argv)
 {
-  ros::init(argc, argv, "keyboard_twist_teleop");
+  ros::init(argc, argv, "keyboard_twist_teleop", ros::init_options::AnonymousName);
 
   ros::NodeHandle n;
 
