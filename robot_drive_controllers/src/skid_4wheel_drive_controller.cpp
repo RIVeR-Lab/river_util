@@ -25,10 +25,12 @@ namespace robot_drive_controllers
 
   void Skid4WheelDriveController::update(const ros::Time& time, const ros::Duration& period) {
 	  double r = sqrt(base_length*base_length/4 + base_width*base_width/4);//distance from turning center to wheel
+	  
+	  double odom_u1 = left_joint_.getVelocity()/(2*M_PI*rotations_per_meter);
+	  double odom_u2 = right_joint_.getVelocity()/(2*M_PI*rotations_per_meter);
 
-
-	  double odom_new_u = (left_joint_.getVelocity() + right_joint_.getVelocity())/2;
-	  double odom_new_w = (right_joint_.getVelocity() - left_joint_.getVelocity())*base_width/(4*r*r);
+	  double odom_new_u = (odom_u1+odom_u2)/2;
+	  double odom_new_w = (odom_u2-odom_u1)*base_width/(4*r*r);
 	  double dt = period.toSec();
 	  double dx, dy;
 	  if(odom_new_w!=0){
