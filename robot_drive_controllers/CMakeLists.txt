@@ -7,11 +7,20 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
   river_ros_util
+  realtime_tools
+  nav_msgs
 )
 
 
 catkin_package(
   CATKIN_DEPENDS controller_interface
+  hardware_interface
+  roscpp
+  geometry_msgs
+  river_ros_util
+  realtime_tools
+  nav_msgs
+
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
 #  DEPENDS system_lib
@@ -23,4 +32,4 @@ include_directories(
 )
 
 add_library(${PROJECT_NAME}
-    src/skid_4wheel_drive_controller.cpp include/robot_drive_controllers/skid_4wheel_drive_controller.h)
+    src/skid_4wheel_drive_controller.cpp)

@@ -2,6 +2,7 @@
 #define ROS_UTIL_H_
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <cstddef>
 #include <cstring>
 #include <exception>
@@ -30,7 +31,7 @@ class StackTraceException : public std::runtime_error{
     size_t frame_size;
  public:
     StackTraceException(const std::string& msg):std::runtime_error(msg){
-      frame_size = backtrace(frames, sizeof frames/sizeof(void*));
+      frame_size = backtrace(frames, (int)(sizeof frames/sizeof(void*)));
     }
     void printStackTrace(){
       backtrace_symbols_fd(frames, frame_size, 2);
