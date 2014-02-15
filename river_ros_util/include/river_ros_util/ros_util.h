@@ -49,7 +49,7 @@ class StackTraceException : public std::runtime_error{
  * @param param_name the name of the parameter
  * @return true if the parameter value was set
  */
-template<class T> static inline bool get_param(ros::NodeHandle& n, T& var, std::string param_name){
+template<class T> static inline bool get_param(const ros::NodeHandle& n, T& var, std::string param_name){
   if(!n.getParam(param_name, var)){
     ROS_WARN_STREAM("Parameter <"<<param_name<<"> not set. Using default value '"<<var<<"'");
     return false;
