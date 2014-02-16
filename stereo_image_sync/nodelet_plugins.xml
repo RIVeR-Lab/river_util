@@ -1,5 +1,5 @@
 <library path="lib/libstereo_image_sync_nodelet">
-  <class name="StereoImageSync" type="StereoImageSync" base_class_type="nodelet::Nodelet">
+  <class name="stereo_image_sync/StereoImageSyncNodelet" type="stereo_image_sync::StereoImageSyncNodelet" base_class_type="nodelet::Nodelet">
     <description>
     </description>
   </class>

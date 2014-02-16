@@ -46,14 +46,17 @@ namespace stereo_image_sync{
 	last_left_ = nullImagePtr;
 	last_right_info_ = nullCameraInfoPtr;
 	last_right_ = nullImagePtr;
+
+	stats_acc(timediff);
+	ROS_INFO_THROTTLE(5, "Frame Time Diff: Mean: %f, Min: %f, Max: %f", mean(stats_acc), min(stats_acc), max(stats_acc));
       }
       else if(timediff<0){//right image much older than left
-	ROS_WARN_THROTTLE(0.5, "Dropping right image (too old)");
+	ROS_WARN_THROTTLE(0.5, "Dropping right image (too old), Missed by: %fs", abs(timediff)-max_time_diff_);
 	last_right_info_ = nullCameraInfoPtr;
 	last_right_ = nullImagePtr;
       }
       else if(timediff>0){//left image much older than right
-	ROS_WARN_THROTTLE(0.5, "Dropping left image (too old)");
+	ROS_WARN_THROTTLE(0.5, "Dropping left image (too old), Missed by: %fs", abs(timediff)-max_time_diff_);
 	last_left_info_ = nullCameraInfoPtr;
 	last_left_ = nullImagePtr;
       }

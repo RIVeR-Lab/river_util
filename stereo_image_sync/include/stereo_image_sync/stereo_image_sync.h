@@ -7,6 +7,13 @@
 #include <image_transport/image_transport.h>
 #include "river_ros_util/ros_util.h"
 
+#include <boost/accumulators/accumulators.hpp>
+#include <boost/accumulators/statistics/stats.hpp>
+#include <boost/accumulators/statistics/mean.hpp>
+#include <boost/accumulators/statistics/min.hpp>
+#include <boost/accumulators/statistics/max.hpp>
+using namespace boost::accumulators;
+
 // Standard libs
 #include <boost/scoped_ptr.hpp>
 #include <boost/bind.hpp>
@@ -41,6 +48,7 @@ private:
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
 
+  accumulator_set< double, stats< tag::min, tag::max, tag::mean > > stats_acc;
 public:
   StereoImageSync(ros::NodeHandle nh = ros::NodeHandle(), ros::NodeHandle pnh = ros::NodeHandle("~"));
 
