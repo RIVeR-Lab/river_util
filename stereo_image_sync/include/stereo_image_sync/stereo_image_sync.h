@@ -6,6 +6,7 @@
 #include <sensor_msgs/CameraInfo.h>
 #include <image_transport/image_transport.h>
 #include "river_ros_util/ros_util.h"
+#include <diagnostic_updater/diagnostic_updater.h>
 
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics/stats.hpp>
@@ -47,6 +48,9 @@ private:
 
   ros::NodeHandle nh_;
   ros::NodeHandle pnh_;
+
+  diagnostic_updater::Updater updater;
+  void update_diagnostic_status(diagnostic_updater::DiagnosticStatusWrapper &stat);
 
   accumulator_set< double, stats< tag::min, tag::max, tag::mean > > stats_acc;
 public:

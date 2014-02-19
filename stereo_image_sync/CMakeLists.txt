@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   nodelet
   river_ros_util
+  diagnostic_updater
 )
 
 catkin_package(
@@ -20,6 +21,7 @@ catkin_package(
   nodelet
   message_runtime
   river_ros_util
+  diagnostic_updater
 )
 
 
