@@ -2,8 +2,8 @@
 
 namespace stereo_image_sync{
 
-  StereoImageSync::StereoImageSync(ros::NodeHandle nh, ros::NodeHandle pnh): nh_(nh), pnh_(pnh),
-									     updater(nh, pnh){
+  StereoImageSync::StereoImageSync(ros::NodeHandle nh, ros::NodeHandle pnh, const std::string node_name): nh_(nh), pnh_(pnh),
+													   updater(nh, pnh, node_name){
     ROS_INFO("Initializing Stereo Image Sync");
 
     define_and_get_param(pnh_, std::string, left_in_topic, "left_in", "left_in");
@@ -25,10 +25,11 @@ namespace stereo_image_sync{
     right_sub_ = it_->subscribeCamera(right_in_topic, 1, &StereoImageSync::right_callback, this);
 
     updater.setHardwareID("none");
-    updater.add("Function updater", this, &StereoImageSync::update_diagnostic_status);
-    updater.force_update();
+    updater.add("Sync Statistics", this, &StereoImageSync::update_diagnostic_status);
+    updater.update();
   }
   void StereoImageSync::update_diagnostic_status(diagnostic_updater::DiagnosticStatusWrapper &stat){
+    stat.summary(diagnostic_msgs::DiagnosticStatus::OK, "");
     stat.add("Mean Frame Time Diff", mean(stats_acc));
     stat.add("Min Frame Time Diff", min(stats_acc));
     stat.add("Max Frame Time Diff", max(stats_acc));
@@ -70,7 +71,7 @@ namespace stereo_image_sync{
 	last_left_ = nullImagePtr;
       }
     }
-    updater.update();
+    updater.force_update();
   }
 
   void StereoImageSync::left_callback(const sensor_msgs::ImageConstPtr& msg, const sensor_msgs::CameraInfoConstPtr& info){

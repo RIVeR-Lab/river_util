@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 
   ros::NodeHandle nh;
   ros::NodeHandle pnh("~");
-  new stereo_image_sync::StereoImageSync(nh, pnh);
+  new stereo_image_sync::StereoImageSync(nh, pnh, ros::this_node::getName());
   ros::spin();
 
   return 0;

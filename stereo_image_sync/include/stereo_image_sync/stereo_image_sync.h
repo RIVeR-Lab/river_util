@@ -54,7 +54,7 @@ private:
 
   accumulator_set< double, stats< tag::min, tag::max, tag::mean > > stats_acc;
 public:
-  StereoImageSync(ros::NodeHandle nh = ros::NodeHandle(), ros::NodeHandle pnh = ros::NodeHandle("~"));
+  StereoImageSync(ros::NodeHandle nh = ros::NodeHandle(), ros::NodeHandle pnh = ros::NodeHandle("~"), const std::string node_name = ros::this_node::getName());
 
   void process_input();
 

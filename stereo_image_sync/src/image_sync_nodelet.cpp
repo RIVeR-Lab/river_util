@@ -12,7 +12,7 @@ public:
 
 private:
   void onInit(){
-    sync_.reset(new stereo_image_sync::StereoImageSync(getNodeHandle(), getPrivateNodeHandle()));
+    sync_.reset(new stereo_image_sync::StereoImageSync(getNodeHandle(), getPrivateNodeHandle(), getName()));
   }
   boost::shared_ptr<stereo_image_sync::StereoImageSync> sync_;
 
