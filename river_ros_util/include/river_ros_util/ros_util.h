@@ -98,6 +98,24 @@ template<class T> static inline bool get_global_param(T& var, std::string param_
   return true;
 }
 
+
+static inline std::string wait_for_param(const ros::NodeHandle& n, std::string param_name){
+  std::string value;
+
+  while (value.empty() && ros::ok()){
+    std::string resolved_param_name;
+    if (!n.searchParam(param_name, resolved_param_name)){
+      resolved_param_name = param_name;
+    }
+    ROS_INFO_STREAM_ONCE("Waiting for parameter: " << param_name);
+
+    n.getParam(resolved_param_name, value);
+
+    usleep(200000);
+  }
+  return value;
+}
+
 }
 
 #endif//ROS_UTIL
