@@ -13,6 +13,7 @@
 #include <exception>
 #include <stdexcept>
 #include "device_driver_base/driver_util.h"
+#include <boost/shared_ptr.hpp>
 
 
 namespace device_driver{
@@ -207,6 +208,7 @@ class DriverSerialPort{
   int fd_;
 
 };
+typedef boost::shared_ptr<DriverSerialPort> DriverSerialPortPtr;
 
 }
 

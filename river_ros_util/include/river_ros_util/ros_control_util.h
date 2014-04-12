@@ -17,11 +17,6 @@ class RobotHWComponent{
   virtual void write() = 0;
 };
 typedef boost::shared_ptr<RobotHWComponent> RobotHWComponentPtr;
-class RobotHWActuator : public RobotHWComponent{
- public:
-  virtual transmission_interface::ActuatorData transmissionData() = 0;
-};
-typedef boost::shared_ptr<RobotHWActuator> RobotHWActuatortPtr;
 
 typedef struct {
   double pos;
