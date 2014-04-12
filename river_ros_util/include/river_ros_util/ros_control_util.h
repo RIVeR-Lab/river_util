@@ -50,7 +50,7 @@ class AbstractRobotHW : public hardware_interface::RobotHW
     const std::string& joint_name = info.joints_[0].name_;
     const std::string& hardware_interface = info.actuators_[0].hardware_interface_;
     const std::string& actuator_name = info.actuators_[0].name_;
-    JointDataPtr joint_data = JointDataPtr(new JointData);
+    JointDataPtr joint_data = JointDataPtr(new JointData());
     js_interface.registerHandle(hardware_interface::JointStateHandle(joint_name, &joint_data->pos, &joint_data->vel, &joint_data->eff));
 
     hardware_interface::JointHandle joint_handle = hardware_interface::JointHandle(js_interface.getHandle(joint_name),
