@@ -1,0 +1,9 @@
+<library path="lib/libsafety_controllers">
+
+  <class name="safety_interface/SafetyTopicController" type="safety_interface::SafetyTopicController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      The SafetyController subscribes to a software pause and update the safety controller
+    </description>
+  </class>
+
+</library>
