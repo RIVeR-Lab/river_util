@@ -1,103 +1,59 @@
-#include "robot_teleop/joystick_twist.h"
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include <sensor_msgs/Joy.h>
 
-using namespace robot_teleop;
+namespace robot_teleop{
 
-Teleop::Teleop(ros::NodeHandle nh, std::string Joystick, std::string BaseVelocity,
-	       int _deadman_button, double _turn_scale, double _drive_scale) {
-  this->deadman_button = _deadman_button;
-  this->turn_scale = (double) _turn_scale;
-  this->drive_scale = (double) _drive_scale;
+class JoystickTeleop
+{
+public:
+  JoystickTeleop();
 
-  base_velocity.linear.x = 0;
-  base_velocity.linear.y = 0;
-  base_velocity.linear.z = 0;
-  base_velocity.angular.x = 0;
-  base_velocity.angular.y = 0;
-  base_velocity.angular.z = 0;
+private:
+  void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
+  
+  ros::NodeHandle nh_;
 
-  last_joy_time = ros::Time().now();
+  int linear_, angular_;
+  double l_scale_, a_scale_;
+  ros::Publisher vel_pub_;
+  ros::Subscriber joy_sub_;
+  
+};
 
-  this->joystick_sub = nh.subscribe(Joystick, 1, &Teleop::JoystickMSG, this);
 
-  this->base_velocity_pub = nh.advertise<geometry_msgs::Twist>(BaseVelocity, 2, true);
+JoystickTeleop::JoystickTeleop():
+  linear_(1),
+  angular_(2)
+{
 
-  this->send_vel_timer = nh.createTimer(ros::Duration(0.05), &Teleop::SendVelTimerCallback, this);
+  nh_.param("axis_linear", linear_, linear_);
+  nh_.param("axis_angular", angular_, angular_);
+  nh_.param("scale_angular", a_scale_, a_scale_);
+  nh_.param("scale_linear", l_scale_, l_scale_);
 
-  this->supervisor_cmd_timer = nh.createTimer(ros::Duration(1), &Teleop::SupervisorTimerCallback,
-					      this);
 
-}
+  vel_pub_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1);
 
-void Teleop::SupervisorTimerCallback(const ros::TimerEvent&) {
 
-}
-
-void Teleop::SendVelTimerCallback(const ros::TimerEvent&) {
-  if ((ros::Time().now().toSec() - last_joy_time.toSec()) > 0.2) {
-    base_velocity.linear.x = 0;
-    base_velocity.angular.z = 0;
-  }
-  base_velocity_pub.publish(base_velocity);
-}
-
-void Teleop::JoystickMSG(const sensor_msgs::JoyConstPtr& joystick) {
-  base_velocity.linear.x = joystick->axes[1] * this->drive_scale;
-  base_velocity.angular.z = joystick->axes[0] * this->turn_scale;
-  last_joy_time = ros::Time().now();
+  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &JoystickTeleop::joyCallback, this);
 
 }
 
-int main(int argc, char **argv) {
+void JoystickTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
+{
+  geometry_msgs::Twist vel;
+  vel.angular.z = a_scale_*joy->axes[angular_];
+  vel.linear.x = l_scale_*joy->axes[linear_];
+  vel_pub_.publish(vel);
+}
 
-  /* Set up ROS */
-  ros::init(argc, argv, "joystick_twist_teleop", ros::init_options::AnonymousName);
-  ros::NodeHandle nh;
-  ros::NodeHandle param_nh("~");
+}
 
-  std::string Joystick("joy"); ///String containing the topic name for Joystick
-  std::string BaseVelocity("BaseVelocity"); ///String containing the topic name for BaseVelocity
-
-  const std::string DeadmanButton("~deadman_button"); ///String containing the topic name for DeadmanButton
-  int deadman_button;
-  const std::string TurnScale("~turn_scale"); ///String containing the topic name for TurnScale
-  double turn_scale;
-  const std::string DriveScale("~drive_scale"); ///String containing the topic name for DriveScale
-  double drive_scale;
-
-  if (argc < 1) {
-    ROS_INFO( "Usage: teleop desired_position_topic base_velocity_topic");
-
-    return 1;
-  } else {
-    //Grab the topic parameters, print warnings if using default values
-    if (!param_nh.getParam(Joystick, Joystick)) {
-      ROS_WARN(
-	       "Parameter <Joystick> Not Set. Using Default Joystick Topic <%s>!", Joystick.c_str());
-    }
-    if (!param_nh.getParam(BaseVelocity, BaseVelocity)) {
-      ROS_WARN(
-	       "Parameter <%s> Not Set. Using Default Base Velocity Topic <%s>!", BaseVelocity.c_str(), BaseVelocity.c_str());
-    }
-    param_nh.param(DeadmanButton, deadman_button, 0);
-
-    param_nh.param(TurnScale, turn_scale, 1.0);
-
-    param_nh.param(DriveScale, drive_scale, 1.0);
-
-  }
-
-
-  //Print out received topics
-  ROS_DEBUG("Joystick Topic Name: <%s>", Joystick.c_str());
-  ROS_DEBUG("Base Velocity Topic Name: <%s>", BaseVelocity.c_str());
-  ROS_DEBUG("Deadman Button: <%d>", deadman_button);
-  ROS_DEBUG("Turn Scale: <%f>", turn_scale);
-  ROS_DEBUG("Drive Scale: <%f>", drive_scale);
-
-  ROS_INFO("Starting Up Joystick Teleop...");
-
-  //create the arm object
-  Teleop teleop(nh, Joystick, BaseVelocity, deadman_button, turn_scale, drive_scale);
+int main(int argc, char** argv)
+{
+  ros::init(argc, argv, "joystick_teleop");
+  robot_teleop::JoystickTeleop teleop;
 
   ros::spin();
 }
