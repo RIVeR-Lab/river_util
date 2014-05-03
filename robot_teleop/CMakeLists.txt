@@ -10,14 +10,13 @@ find_package(PkgConfig)
 pkg_check_modules(Curses ncurses)
 
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS 
   CATKIN_DEPENDS roscpp geometry_msgs message_runtime
   DEPENDS ncurses
 )
 
 
 include_directories(
-  include
   ${Curses_INCLUDE_DIRS}
   ${catkin_INCLUDE_DIRS}
 )
