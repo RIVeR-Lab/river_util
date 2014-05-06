@@ -101,7 +101,7 @@ private:
 	  msg.pose.covariance[14] = 99999;
 	  msg.pose.covariance[21] = 99999;
 	  msg.pose.covariance[28] = 99999;
-	  msg.pose.covariance[35] = 10;
+	  msg.pose.covariance[35] = 10000;
 
 	  msg.twist.covariance.assign(0);
 	  msg.twist.covariance[0] = 0.1;
@@ -109,7 +109,7 @@ private:
 	  msg.twist.covariance[14] = 99999;
 	  msg.twist.covariance[21] = 99999;
 	  msg.twist.covariance[28] = 99999;
-	  msg.twist.covariance[35] = 10;
+	  msg.twist.covariance[35] = 10000;
 
 	  msg.header.frame_id = odom_frame_;
 	  msg.child_frame_id = robot_frame_;
