@@ -77,7 +77,7 @@ private:
       BOOST_FOREACH(std::string joint_name, joints){
 	std::vector<std::string>::const_iterator joint_itr = std::find(msg->name.begin(), msg->name.end(), joint_name);
 	if(joint_itr == msg->name.end()){
-	  ROS_WARN_STREAM("Got joint message that is missing requested joint: "<<joint_name);
+	  //ROS_WARN_STREAM("Got joint message that is missing requested joint: "<<joint_name);
 	  return;
 	}
 	int index = joint_itr - msg->name.begin();
