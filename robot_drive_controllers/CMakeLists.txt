@@ -27,6 +27,23 @@ include_directories(
 
 add_library(skid_4wheel_drive_controller
     src/skid_4wheel_drive_controller.cpp)
+target_link_libraries(skid_4wheel_drive_controller ${catkin_LIBRARIES})
 
 add_executable(skid_4wheel_drive_controller_node src/skid_4wheel_drive_controller_node.cpp)
 target_link_libraries(skid_4wheel_drive_controller_node ${catkin_LIBRARIES} skid_4wheel_drive_controller)
+
+#############
+## Install ##
+#############
+
+## Mark executables and/or libraries for installation
+install(TARGETS skid_4wheel_drive_controller skid_4wheel_drive_controller_node
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Mark cpp header files for installation
+install(DIRECTORY include/robot_drive_controllers
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)

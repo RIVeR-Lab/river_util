@@ -2,7 +2,7 @@
 <package>
   <name>robot_drive_controllers</name>
   <version>0.0.0</version>
-  <description>The robot_drive_controllers package</description>
+  <description>A package containing nodes for controlling robots with different drive configurations</description>
 
   <maintainer email="mwills@wpi.edu">Mitchell Wills</maintainer>
 

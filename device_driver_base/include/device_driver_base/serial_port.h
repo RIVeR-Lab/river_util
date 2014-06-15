@@ -18,23 +18,6 @@
 
 namespace device_driver{
 
-/**
- * @author Mitchell Wills
- * @brief An exception indicating that a function timed out while reading bytes from the device
- */
-class TimeoutException : public Exception{
- public:
-  TimeoutException(const std::string& msg):Exception(msg){}
-};
-/**
- * @author Mitchell Wills
- * @brief An exception indicating that corrupt data was recieved from the device
- */
-class CorruptDataException : public Exception{
- public:
-  CorruptDataException(const std::string msg):Exception(msg){}
-};
-
 #define BAUD(rate) case rate: return B##rate
 /**
  * Converts an integer to the internal bit representation of a baud rate

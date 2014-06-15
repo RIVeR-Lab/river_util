@@ -24,6 +24,7 @@ class Exception : public river_ros_util::StackTraceException{
  public:
   Exception(const std::string& msg):river_ros_util::StackTraceException(msg){}
 };
+
 /**
  * @author Mitchell Wills
  * @brief An exception indicating that an invalid argument was provided to a function
@@ -34,9 +35,30 @@ class IllegalArgumentException : public Exception{
 
 };
 
+/**
+ * @author Mitchell Wills
+ * @brief An exception indicating that an atempt was made to access the device, but it was not open
+ */
 class DeviceNotOpenException : public Exception{
  public:
   DeviceNotOpenException(const std::string msg):Exception(msg){}
+};
+
+/**
+ * @author Mitchell Wills
+ * @brief An exception indicating that a function timed out while reading bytes from the device
+ */
+class TimeoutException : public Exception{
+ public:
+  TimeoutException(const std::string& msg):Exception(msg){}
+};
+/**
+ * @author Mitchell Wills
+ * @brief An exception indicating that corrupt data was recieved from the device
+ */
+class CorruptDataException : public Exception{
+ public:
+  CorruptDataException(const std::string msg):Exception(msg){}
 };
 
 }

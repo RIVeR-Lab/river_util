@@ -1,7 +1,7 @@
 <package>
   <name>stereo_image_sync</name>
   <version>0.0.0</version>
-  <description>A that takes two image topics and synchronizes their timestamps</description>
+  <description>A package that takes two image topics and synchronizes their timestamps</description>
 
   <maintainer email="mwills@wpi.edu">Mitchell Wills</maintainer>
 

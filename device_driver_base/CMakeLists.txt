@@ -1,18 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(device_driver_base)
 
-find_package(catkin REQUIRED roscpp std_msgs actionlib actionlib_msgs dynamic_reconfigure river_ros_util)
-
-add_action_files(DIRECTORY action FILES SetJointPosition.action SetMotorPosition.action)
-add_message_files(DIRECTORY msg FILES MotorFeedback.msg SensorLevels.msg SetJointVelocity.msg SetMotorPower.msg SetMotorVelocity.msg SoftwareStop.msg)
-generate_messages(DEPENDENCIES actionlib_msgs)
-
+find_package(catkin REQUIRED COMPONENTS roscpp std_msgs actionlib actionlib_msgs dynamic_reconfigure river_ros_util message_generation)
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES serial_port device_driver
-  CATKIN_DEPENDS roscpp std_msgs actionlib actionlib_msgs dynamic_reconfigure river_ros_util
-  DEPENDS sensors
+  LIBRARIES serial_port
+  CATKIN_DEPENDS roscpp std_msgs actionlib actionlib_msgs dynamic_reconfigure river_ros_util message_runtime
+  DEPENDS
 )
 
 include_directories(
@@ -21,5 +16,19 @@ include_directories(
 )
 
 add_library(serial_port src/serial_port.cpp)
-add_library(device_driver src/device_driver.cpp)
 
+#############
+## Install ##
+#############
+
+## Mark executables and/or libraries for installation
+install(TARGETS serial_port
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Mark cpp header files for installation
+install(DIRECTORY include/
+  DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}
+)
