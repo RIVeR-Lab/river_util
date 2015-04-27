@@ -19,6 +19,6 @@ include_directories(
 #############
 
 ## Mark cpp header files for installation
-install(DIRECTORY include/river_ros_util
+install(DIRECTORY include/river_ros_util/
   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
